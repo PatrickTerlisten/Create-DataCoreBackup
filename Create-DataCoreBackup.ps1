@@ -40,14 +40,15 @@ $Keep = 3
 Connect-DcsServer -Server $DcsLoginServer -Credential $DcsCredItem -Connection $DcsLoginServer
 
 # Rotate backup files
-ForEach ($Dcs in (Get-DcsServer)) {Invoke-Command -ComputerName $Dcs -ScriptBlock {
+ForEach ($Dcs in (Get-DcsServer)) {
+    Invoke-Command -ComputerName $Dcs -ScriptBlock {
 
-    # Keep last x files - see $Keep for number of files to keep
-    # $Files is a variable which stores the filenames of all files that match *.cab
-    $Files = Get-ChildItem -Path $using:BackupFolder -Recurse | Where-Object {-not $_.PsIsContainer} | where {$_.name -like '*.zip'}
+        # Keep last x files - see $Keep for number of files to keep
+        # $Files is a variable which stores the filenames of all files that match *.cab
+        $Files = Get-ChildItem -Path $using:BackupFolder -Recurse | Where-Object {-not $_.PsIsContainer} | Where-Object {$_.name -like '*.zip'}
 
-    # Remove old files
-    $Files | Sort-Object CreationTime | Select-Object -First ($Files.Count - $using:Keep)| Remove-Item
+        # Remove old files
+        $Files | Sort-Object CreationTime | Select-Object -First ($Files.Count - $using:Keep)| Remove-Item
     }
 }
 
