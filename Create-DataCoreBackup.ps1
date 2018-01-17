@@ -17,7 +17,7 @@
     International License (https://creativecommons.org/licenses/by-nc-sa/4.0/).
     
    .LINK
-    http://www.vcloudnine.de
+    https://www.vcloudnine.de
 #>
 
 # Register DataCore Cmdlets
